@@ -25,11 +25,11 @@ pipeline {
                 junit 'target/surefire-reports/*.xml'
                 archiveArtifacts 'target/*.jar'
             }
-        }
-        stage('print'){
-            steps{
-                sh "echo hello"
+            post {
+                success {
+                    emailext body: "Please check the console output at $BUILD_URL for more information", to: "dedeepyarachakonda@gmail.com", subject: '$PROJECT_NAME is completed - Build number is $BUILD_NUMBER and build status is $BUILD_STATUS'
+                }
             }
-        }      
+        }
     }
 }
